@@ -1,0 +1,18 @@
+# Apache .htaccess
+RewriteEngine On
+RewriteRule config.php$ src/config.php [L]
+RewriteRule dist_domestic.php$ src/dist_domestic.php [L]
+RewriteRule dist_client.php$ src/dist_client.php [L]
+RewriteRule phpmodules/(.*)$ src/phpmodules/$1 [L]
+RewriteRule android/(.*)$ src/android/$1 [L]
+RewriteRule ios/(.*)$ src/ios/$1 [L]
+RewriteRule images/svg/(.*)$ src/images/svg/$1 [L]
+RewriteRule css/(.*)$ src/css/$1 [L]
+RewriteRule font/(.*)$ src/font/$1 [L]
+RewriteRule js/(.*)$ src/js/$1 [L]
+RewriteRule plugin/(.*)$ src/plugin/$1 [L]
+RewriteRule shells/(.*)$ src/shells/$1 [L]
+RewriteRule index.html$ src/index.html [L]
+RewriteRule login.php$ src/login.php [L]
+RewriteRule logout.php$ src/logout.php [L]
+RewriteRule setup.php$ src/setup.php [L]

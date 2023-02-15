@@ -1,0 +1,40 @@
+#####
+# App binaries
+*.apk
+*.apk.idsig
+*.APK
+*.ipa
+*.IPA
+*.app
+*.aab
+*.aab.idig
+*.AAB
+*.AAB.idig
+**/*.xcarchive
+ios_distribution/ExportOptions.plist
+[ia][on][sd]*/*.html
+#####
+# PNG
+*_file.png
+*_Obfuscation.png
+*IxShieldCheck.png
+#####
+# Log
+*.log
+*.bak
+#####
+# i18n
+langcache/php_i18n_*
+# cache organization chart
+langcache/org_chart_*
+#####
+# etc
+PHPMailer
+info.php
+.DS_Store
+.vscode
+Icon*
+.SynologyWorkingDirectory
+#####
+# Source of AppDistTemplate, A.K.A JenkinsAppDistTemplateSource
+src
