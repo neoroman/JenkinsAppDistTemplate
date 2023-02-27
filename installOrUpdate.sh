@@ -11,6 +11,9 @@ if [ ! -d lang ]; then
 fi
 if [ ! -d images ]; then
     mkdir images
+else
+    rm -rf images
+    mkdir images
 fi
 # if [ ! -d langcache ]; then
 #     mkdir langcache
@@ -25,141 +28,204 @@ fi
 chmod 777 android_distributions
 ##### Copy defaults files from src
 
-##### Make Symbolic Links
+##### Remove Symbolic Links if exists
+if [ -d android ]; then
+    rm -rf android
+fi
 if [ ! -h android ]; then
-    if [ -d android ]; then
-        rm -rf android
-    fi
-    # ln -s src/android
+    echo ' ' #ln -s src/android
 else
     rm -f android
 fi
+if [ -d ios ]; then
+    rm -rf ios
+fi
 if [ ! -h ios ]; then
-    if [ -d ios ]; then
-        rm -rf ios
-    fi
-    # ln -s src/ios
+    echo ' ' # ln -s src/ios
 else
     rm -f ios
 fi
-if [ ! -h images/svg ]; then
-    if [ -d images/svg ]; then
-        rm -rf images/svg
-    fi
-    # ln -s ../src/images/svg images/svg
-else
-    rm -f images/svg
+if [ -d css ]; then
+    rm -rf css
 fi
 if [ ! -h css ]; then
-    if [ -d css ]; then
-        rm -rf css
-    fi
-    # ln -s src/css
+    echo ' ' # ln -s src/css
 else
     rm -f css
 fi
+if [ -d dist ]; then
+    rm -rf dist
+fi
+if [ -d font ]; then
+    rm -rf font
+fi
 if [ ! -h font ]; then
-    if [ -d font ]; then
-        rm -rf font
-    fi
-    # ln -s src/font
+    echo ' ' # ln -s src/font
 else
     rm -f font
 fi
-if [ ! -h config.php ]; then
-    if [ -f config.php ]; then
-        rm -f config.php
-    fi
-    # ln -s src/config.php
-else
-    rm -f config.php
+if [ -d images/svg ]; then
+    rm -rf images/svg
 fi
-if [ ! -h dist_client.php ]; then
-    if [ -f dist_client.php ]; then
-        rm -f dist_client.php
-    fi
-    # ln -s src/dist_client.php
+if [ ! -h images/svg ]; then
+    echo ' ' # ln -s ../src/images/svg images/svg
 else
-    rm -f dist_client.php
+    rm -f images/svg
 fi
-if [ ! -h dist_domestic.php ]; then
-    if [ -f dist_domestic.php ]; then
-        rm -f dist_domestic.php
-    fi
-    # ln -s src/dist_domestic.php
-else
-    rm -f dist_domestic.php
-fi
-if [ ! -h index.html ]; then
-    if [ -f index.html ]; then
-        rm -f index.html
-    fi
-    # ln -s src/index.html
-else
-    rm -f index.html
+if [ -d js ]; then
+    rm -rf js
 fi
 if [ ! -h js ]; then
-    if [ -d js ]; then
-        rm -rf js
-    fi
-    # ln -s src/js
+    echo ' ' # ln -s src/js
 else
     rm -f js
 fi
-if [ ! -h login.php ]; then
-    if [ -f login.php ]; then
-        rm -f login.php
-    fi
-    # ln -s src/login.php
-else
-    rm -f login.php
-fi
-if [ ! -h logout.php ]; then
-    if [ -f logout.php ]; then
-        rm -f logout.php
-    fi
-    # ln -s src/logout.php
-else
-    rm -f logout.php
-fi
 if [ ! -h phpmodules ]; then
-    if [ -d phpmodules ]; then
-        rm -rf phpmodules
-    fi
-    # ln -s src/phpmodules
+    echo ' ' # ln -s src/phpmodules
 else
     rm -f phpmodules
 fi
+if [ -d plugin ]; then
+    rm -rf plugin
+fi
 if [ ! -h plugin ]; then
-    if [ -d plugin ]; then
-        rm -rf plugin
-    fi
-    # ln -s src/plugin
+    echo ' ' # ln -s src/plugin
 else
     rm -f plugin
 fi
+if [ -d shells ]; then
+    rm -rf shells
+fi
 if [ ! -h shells ]; then
-    if [ -d shells ]; then
-        rm -rf shells
-    fi
-    # ln -s src/shells
+    echo ' ' # ln -s src/shells
 else
     rm -f shells 
 fi
+if [ -d utils ]; then
+    rm -rf utils
+fi
+if [ -f common.php ]; then
+    rm -f common.php
+fi
+if [ -f config.php ]; then
+    rm -f config.php
+fi
+if [ ! -h config.php ]; then
+    echo ' ' # ln -s src/config.php
+else
+    rm -f config.php
+fi
+if [ -f dist_client.php ]; then
+    rm -f dist_client.php
+fi
+if [ ! -h dist_client.php ]; then
+    echo ' ' # ln -s src/dist_client.php
+else
+    rm -f dist_client.php
+fi
+if [ -f dist_domestic.php ]; then
+    rm -f dist_domestic.php
+fi
+if [ ! -h dist_domestic.php ]; then
+    echo ' ' # ln -s src/dist_domestic.php
+else
+    rm -f dist_domestic.php
+fi
+if [ -f distributions.php ]; then
+    rm -f distributions.php
+fi
+if [ -f doDistributions.sh ]; then
+    rm -f doDistributions.sh
+fi
+if [ -f feedback.php ]; then
+    rm -f feedback.php
+fi
+if [ -f index.html ]; then
+    rm -f index.html
+fi
+if [ ! -h index.html ]; then
+    echo ' ' # ln -s src/index.html
+else
+    rm -f index.html
+fi
+if [ -f login.php ]; then
+    rm -f login.php
+fi
+if [ ! -h login.php ]; then
+    echo ' ' # ln -s src/login.php
+else
+    rm -f login.php
+fi
+if [ -f logout.php ]; then
+    rm -f logout.php
+fi
+if [ ! -h logout.php ]; then
+    echo ' ' # ln -s src/logout.php
+else
+    rm -f logout.php
+fi
+if [ -d phpmodules ]; then
+    rm -rf phpmodules
+fi
+if [ -f setup.php ]; then
+    rm -f setup.php
+fi
 if [ ! -h setup.php ]; then
-    if [ -f setup.php ]; then
-        rm -f setup.php
-    fi
-    # ln -s src/setup.php
+    echo ' ' # ln -s src/setup.php
 else
     rm -f setup.php
+fi
+if [ -f pw_guide.php ]; then
+    rm -f pw_guide.php
+fi
+if [ -f pw_guide_uaqa.php ]; then
+    rm -f pw_guide_uaqa.php
+fi
+if [ -f pw_guide.html ]; then
+    rm -f pw_guide.html
+fi
+if [ -f pw_guide_uaqa.html ]; then
+    rm -f pw_guide_uaqa.html
+fi
+if [ -f recommand.php ]; then
+    rm -f recommand.php
+fi
+if [ -f remove_html_snippet.php ]; then
+    rm -f remove_html_snippet.php
+fi
+if [ -f sendmail_gmail.php ]; then
+    rm -f sendmail_gmail.php
+fi
+if [ -f sendmail_gmail_release.php ]; then
+    rm -f sendmail_gmail_release.php
+fi
+if [ -f sendmail_gmail_uDev3.php ]; then
+    rm -f sendmail_gmail_uDev3.php
+fi
+if [ -f sendmail_u*.php ]; then
+    rm -f sendmail_u*.php
+fi
+if [ -f syncToNasNeo2UA.sh ]; then
+    rm -f syncToNasNeo2UA.sh
+fi
+if [ -f syncToNasNeo2UA.sh ]; then
+    rm -f syncToNasNeo2UA.sh
+fi
+if [ -f test.php ]; then
+    rm -f test.php
+fi
+if [ -f undo_remove_html_snippet.php ]; then
+    rm -f undo_remove_html_snippet.php
+fi
+if [ -f makeJsonFromHTML.sh ]; then
+    rm -f makeJsonFromHTML.sh
 fi
 if test -z $LC_ALL; then
     export LC_ALL="C"
 fi
 #####
 if [ ! -d src ]; then
-    git submodule add https://github.com/neoroman/JenkinsAppDistTemplateSource.git src
+    git submodule add -f https://github.com/neoroman/JenkinsAppDistTemplateSource.git src
     git config -f .gitmodules submodule.src.url https://github.com/neoroman/JenkinsAppDistTemplateSource.git
     git submodule sync
     git submodule update --force --recursive --init --remote 

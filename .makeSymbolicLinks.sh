@@ -159,7 +159,7 @@ if test -z $LC_ALL; then
 fi
 #####
 if [ ! -d src ]; then
-    git submodule add https://github.com/neoroman/JenkinsAppDistTemplateSource.git src
+    git submodule add -f https://github.com/neoroman/JenkinsAppDistTemplateSource.git src
     git config -f .gitmodules submodule.src.url https://github.com/neoroman/JenkinsAppDistTemplateSource.git
     git submodule sync
     git submodule update --force --recursive --init --remote 
