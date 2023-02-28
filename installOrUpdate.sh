@@ -10,7 +10,9 @@ if [ ! -d lang ]; then
     mkdir lang
 fi
 if [ ! -h lang/default.json ]; then
-    ln -s src/lang/default.json lang/default.json
+    if [ ! -f lang/default.json ]; then
+        ln -s ../src/lang/default.json lang/default.json
+    fi
 fi
 if [ ! -d css ]; then
     mkdir css
@@ -31,7 +33,7 @@ else
     mkdir images
 fi
 if [ ! -h images/HomeIcon.png ]; then
-    ln -s src/images/HomeIcon.png images/HomeIcon.png
+    ln -s ../src/images/HomeIcon.png images/HomeIcon.png
 fi
 if [ ! -d ios_distributions ]; then
     mkdir ios_distributions
