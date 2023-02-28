@@ -2,6 +2,16 @@
 #
 # Written by EungShik Kim on 2023.02.16
 #
+##### Functions
+function writeCustomCSS() {
+    echo "/* Override src/css/common.css here by uncomment followings or copy code from src/css/common.css */" > $CUSTOM_CSS
+    echo "/*" >> $CUSTOM_CSS
+    echo ".login_area .btn_login {display:block;width:384px;height:60px;margin:14px auto 0 auto;text-align:center;font-size:20px;line-height:60px;color:#fff;box-shadow:0 2px 2px rgba(0, 0, 0, 0.24), 0 0 2px;border-radius:4px;background:#2CBBB6;}" >> $CUSTOM_CSS
+    echo ".qa_type2 .header {height:80px;background-color:#2CBBB6;}" >> $CUSTOM_CSS
+    echo ".sub_type2 .header {background-color:#2CBBB6;}" >> $CUSTOM_CSS
+    echo ".sub_type2 .header .search_area .inp_self {background:#2CBBB6;}"  >> $CUSTOM_CSS
+    echo "*/" >> $CUSTOM_CSS
+}
 ##### Make Directories
 if [ ! -d config ]; then
     mkdir config
@@ -14,17 +24,12 @@ if [ ! -h lang/default.json ]; then
         ln -s ../src/lang/default.json lang/default.json
     fi
 fi
-if [ ! -d css ]; then
-    mkdir css
-    touch css/user.css
-elif [ ! -f css/user.css ]; then
-    echo "/* Override src/css/common.css here by uncomment followings or copy code from src/css/common.css */" > css/user.css
-    echo "/*" >> css/user.css
-    echo ".login_area .btn_login {display:block;width:384px;height:60px;margin:14px auto 0 auto;text-align:center;font-size:20px;line-height:60px;color:#fff;box-shadow:0 2px 2px rgba(0, 0, 0, 0.24), 0 0 2px;border-radius:4px;background:#2CBBB6;}" >> css/user.css
-    echo ".qa_type2 .header {height:80px;background-color:#2CBBB6;}" >> css/user.css
-    echo ".sub_type2 .header {background-color:#2CBBB6;}" >> css/user.css
-    echo ".sub_type2 .header .search_area .inp_self {background:#2CBBB6;}"  >> css/user.css
-    echo "*/" >> css/user.css
+CUSTOM_CSS="custom/user.css"
+if [ ! -d custom ]; then
+    mkdir custom
+    writeCustomCSS
+elif [ ! -f $CUSTOM_CSS ]; then
+    writeCustomCSS
 fi
 if [ ! -d images ]; then
     mkdir images
