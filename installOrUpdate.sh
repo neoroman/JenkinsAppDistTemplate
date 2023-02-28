@@ -63,6 +63,9 @@ fi
 if [ -h ios ]; then
     rm -f ios
 fi
+if [ -d css ]; then
+    rm -rf css
+fi
 if [ -d dist ]; then
     rm -rf dist
 fi
