@@ -2,6 +2,7 @@
 #
 # Written by EungShik Kim on 2023.02.16
 #
+SCRIPT_PATH=$(dirname $0)
 ##### Functions
 function writeCustomCSS() {
     echo "/* Override src/css/common.css here by uncomment followings or copy code from src/css/common.css */" > $CUSTOM_CSS
@@ -12,6 +13,8 @@ function writeCustomCSS() {
     echo ".sub_type2 .header .search_area .inp_self {background:#2CBBB6;}"  >> $CUSTOM_CSS
     echo "*/" >> $CUSTOM_CSS
 }
+##### Change current directory
+cd $SCRIPT_PATH
 ##### Make Directories
 if [ ! -d config ]; then
     mkdir config
@@ -32,9 +35,6 @@ elif [ ! -f $CUSTOM_CSS ]; then
     writeCustomCSS
 fi
 if [ ! -d images ]; then
-    mkdir images
-else
-    rm -rf images
     mkdir images
 fi
 if [ ! -h images/HomeIcon.png ]; then
@@ -207,6 +207,27 @@ fi
 if [ -f makeJsonFromHTML.sh ]; then
     rm -f makeJsonFromHTML.sh
 fi
+if [ -f reorderFileTime.sh ]; then
+    rm -f reorderFileTime.sh
+fi
+if [ -f sendmail_domestic.php ]; then
+    rm -f sendmail_domestic.php
+fi
+if [ -f sendmail_release.php ]; then
+    rm -f sendmail_release.php
+fi
+if [ -f sshFunctions.sh ]; then
+    rm -f sshFunctions.sh
+fi
+if [ -f upload.php ]; then
+    rm -f upload.php
+fi
+if [ -f upload_ok.php ]; then
+    rm -f upload_ok.php
+fi
+if [ -d .test ]; then
+    rm -rf .test
+fi
 if test -z $LC_ALL; then
     export LC_ALL="C"
 fi
@@ -223,4 +244,4 @@ else
     git submodule foreach git pull origin main
 fi
 #####
-chmod 777 src/langcache
+chmod -R 777 $SCRIPT_PATH
