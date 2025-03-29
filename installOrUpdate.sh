@@ -16,6 +16,36 @@ function writeCustomCSS() {
 }
 ##### Change current directory
 cd $SCRIPT_PATH
+
+if [ ! -d src ]; then
+    git submodule add -f https://github.com/neoroman/JenkinsAppDistTemplateSource.git src
+    git config -f .gitmodules submodule.src.url https://github.com/neoroman/JenkinsAppDistTemplateSource.git
+    git submodule sync
+    git submodule update --force --recursive --init --remote 
+    git submodule foreach git pull origin main
+else
+    git submodule sync
+    git submodule update --force --recursive --init --remote 
+    git submodule foreach git pull origin main
+fi
+#####
+# Check if src/update.sh exists
+if [ -f src/update.sh ]; then
+    # Execute the update script
+    echo "Executing src/update.sh..."
+    # Make symbolic links for src/update.sh to this script after renaming 'installOrUpdate.sh' to 'na_installOrUpdate.sh'
+    if [ -f installOrUpdate.sh ]; then
+        mv installOrUpdate.sh na_installOrUpdate.sh
+    fi
+    # Create symbolic link to src/update.sh to installOrUpdate.sh
+    ln -sf src/update.sh installOrUpdate.sh
+    # Execute the symbolic linked script
+    ./installOrUpdate.sh
+else
+    echo "src/update.sh not found. Skipping update."
+fi
+
+
 ##### Make Directories
 for dir in config lang custom images ios_distributions android_distributions; do
     [ ! -d "$dir" ] && mkdir "$dir"
@@ -105,7 +135,6 @@ ln -sf src/dist_client.php dist_client.php
 ln -sf src/phpmodules phpmodules
 ln -sf src/android android
 ln -sf src/ios ios
-ln -sf src/images/svg images/svg
 ln -sf src/css css
 ln -sf src/font font
 ln -sf src/js js
@@ -116,10 +145,71 @@ ln -sf src/login.php login.php
 ln -sf src/logout.php logout.php
 ln -sf src/setup.php setup.php
 
-# Additional redirects for specific HTML files
-ln -sf src/dist_client.php dist_client.html
-ln -sf src/dist_domestic.php dist_uaqa.html
-ln -sf src/dist_client.php dist_kt.html
+# 원본 디렉토리와 대상 디렉토리의 절대 경로 계산
+SRC_SVG_PATH="$(pwd)/src/images/svg"
+TARGET_SVG_PATH="$(pwd)/images/svg"
 
+# 대상 디렉토리의 존재 여부 확인 및 필요시 제거
+if [ -e "$TARGET_SVG_PATH" ] || [ -h "$TARGET_SVG_PATH" ]; then
+    rm -rf "$TARGET_SVG_PATH"
+fi
+
+# 절대 경로를 사용하여 심볼릭 링크 생성
+ln -sf "$SRC_SVG_PATH" "$TARGET_SVG_PATH"
+echo "Created symbolic link: $TARGET_SVG_PATH -> $SRC_SVG_PATH"
+
+# Additional redirects for specific HTML files - Create HTML redirects instead of symlinks
+echo "Creating HTML redirects for specific pages..."
+
+# Create dist_client.html with redirect if it doesn't exist or update it
+if [ -h dist_client.html ]; then
+    # If it's a symbolic link, remove it first
+    rm -f dist_client.html
+    echo "Removed symbolic link dist_client.html"
+fi
+
+if [ ! -f dist_client.html ] || ! grep -q "dist_client.php" dist_client.html; then
+    cat > dist_client.html << 'EOL'
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv='REFRESH' content='0;url=dist_client.php'>
+</HEAD>
+</HTML>
+EOL
+    echo "Created/Updated dist_client.html with redirect to dist_client.php"
+else
+    echo "dist_client.html already exists with correct redirect"
+fi
+
+# Create dist_uaqa.html with redirect if it doesn't exist or update it
+if [ -h dist_uaqa.html ]; then
+    # If it's a symbolic link, remove it first
+    rm -f dist_uaqa.html
+    echo "Removed symbolic link dist_uaqa.html"
+fi
+
+if [ ! -f dist_uaqa.html ] || ! grep -q "dist_domestic.php" dist_uaqa.html; then
+    cat > dist_uaqa.html << 'EOL'
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<META http-equiv='REFRESH' content='0;url=dist_domestic.php'>
+</HEAD>
+</HTML>
+EOL
+    echo "Created/Updated dist_uaqa.html with redirect to dist_domestic.php"
+else
+    echo "dist_uaqa.html already exists with correct redirect"
+fi
+
+# Create symbolic link for dist_kt.html if needed
+if [ ! -h dist_kt.html ] || [ "$(readlink dist_kt.html)" != "dist_client.html" ]; then
+    rm -f dist_kt.html
+    ln -sf dist_client.html dist_kt.html
+    echo "Created symbolic link: dist_kt.html -> dist_client.html"
+else
+    echo "dist_kt.html symbolic link already exists"
+fi
 
 chmod -R 777 $SCRIPT_PATH
